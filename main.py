@@ -1,6 +1,6 @@
 from tkinter import Tk, Listbox, PhotoImage, Button, Frame, Menu, Label, Scale, Toplevel
 from player import Player
-
+import platform
 
 def about():
     about_win = Toplevel(window)
@@ -8,8 +8,8 @@ def about():
     about_win.config(bg = "#262626")
     about_win.resizable(False, False)
     about_frame = Frame(about_win, bg = "#262626")
-    version = Label(master = about_frame, text = "Version: 1.0.0", bg = "#262626")
-    created = Label(master = about_frame, text = "Created by NVORON", bg = "#262626")
+    version = Label(master = about_frame, text = "Version: 1.0.0", fg = "white", bg = "#262626")
+    created = Label(master = about_frame, text = "Created by NVORON", fg = "white", bg = "#262626")
 
     about_frame.pack(fill = "x", pady = 5, padx = 10)
     version.pack()
@@ -18,8 +18,11 @@ def about():
 
 #Окно
 window = Tk()
-window.title("")
-window.geometry("300x400")
+window.title("Music Player")
+if platform.system() == 'Windows':
+    window.geometry("300x450")
+else:
+    window.geometry("300x400")
 window.config(bg = "#262626")
 window.resizable(False, False)
 window.iconphoto(True, PhotoImage(file = './gui/logo.png'))
@@ -27,14 +30,14 @@ songs_list = Listbox(master = window, fg = "white", bg = "black", borderwidth = 
 
 
 time_frame = Frame(window, bg = "#262626")
-start_time = Label(master = time_frame, text = '', anchor = "w", bg = "#262626", padx = 10)
-end_time = Label(master = time_frame, text = '', anchor = "e", bg = "#262626", padx = 10)
+start_time = Label(master = time_frame, text = '', fg = "white", anchor = "w", bg = "#262626", padx = 10)
+end_time = Label(master = time_frame, text = '', fg = "white", anchor = "e", bg = "#262626", padx = 10)
 music_slider = Scale(master = window, from_ = 0, to = 100, orient = "horizontal", bg = "#262626", relief = "flat", length = 270, showvalue = False)
 
 volume_frame = Frame(window, bg = "#262626")
 volume_but = Button(master = volume_frame, borderwidth = 0, relief = "flat", bg = "#262626")
 volume_slider  = Scale(master = volume_frame, from_ = 0, to = 100, relief = "flat", orient = "horizontal", bg = "#262626", length = 240, showvalue = False, label = "")
-volume_label = Label(master = window, text = '100%', relief = "flat", anchor = "center", bg = "#262626")
+volume_label = Label(master = window, text = '100%', fg = "white", relief = "flat", anchor = "center", bg = "#262626")
 
 player = Player(songs_list, start_time, end_time, music_slider, volume_label, volume_slider, volume_but)
 
