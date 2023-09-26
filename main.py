@@ -1,27 +1,40 @@
-from tkinter import Tk, Listbox, PhotoImage, Button, Frame, Menu, Label, Scale, Canvas
+from tkinter import Tk, Listbox, PhotoImage, Button, Frame, Menu, Label, Scale, Toplevel
 from player import Player
+
+
+def about():
+    about_win = Toplevel(window)
+    about_win.geometry("220x120")
+    about_win.config(bg = "#262626")
+    about_win.resizable(False, False)
+    about_frame = Frame(about_win, bg = "#262626")
+    version = Label(master = about_frame, text = "Version: 1.0.0", bg = "#262626")
+    created = Label(master = about_frame, text = "Created by NVORON", bg = "#262626")
+
+    about_frame.pack(fill = "x", pady = 5, padx = 10)
+    version.pack()
+    created.pack()
+
 
 #Окно
 window = Tk()
-window.title("Music Player")
+window.title("")
 window.geometry("300x400")
-window.config(bg="#262626")
+window.config(bg = "#262626")
 window.resizable(False, False)
-window.iconphoto(True, PhotoImage(file=('./gui/logo.png')))
-window.wm_attributes("-transparent", True)
+window.iconphoto(True, PhotoImage(file = './gui/logo.png'))
 songs_list = Listbox(master = window, fg = "white", bg = "black", borderwidth = 5, justify = "left", width = 29, font = ('poppins', 14))
 
 
-#Рамка для врмемени музыки
 time_frame = Frame(window, bg = "#262626")
-start_time = Label(master = time_frame, text='', anchor = "w", bg="#262626", padx = 10)
-end_time = Label(master = time_frame, text='', anchor = "e", bg="#262626", padx = 10)
-music_slider = Scale(master = window, from_ = 0, to = 100, orient="horizontal", bg = "#262626", relief="flat", length = 270, showvalue = False)
+start_time = Label(master = time_frame, text = '', anchor = "w", bg = "#262626", padx = 10)
+end_time = Label(master = time_frame, text = '', anchor = "e", bg = "#262626", padx = 10)
+music_slider = Scale(master = window, from_ = 0, to = 100, orient = "horizontal", bg = "#262626", relief = "flat", length = 270, showvalue = False)
 
 volume_frame = Frame(window, bg = "#262626")
 volume_but = Button(master = volume_frame, borderwidth = 0, relief = "flat", bg = "#262626")
-volume_slider  = Scale(master = volume_frame, from_ = 0, to = 100, relief="flat", orient="horizontal", bg = "#262626", length = 240, showvalue = False, label = "")
-volume_label = Label(master = window, text = '100%', relief="flat", anchor = "center", bg="#262626")
+volume_slider  = Scale(master = volume_frame, from_ = 0, to = 100, relief = "flat", orient = "horizontal", bg = "#262626", length = 240, showvalue = False, label = "")
+volume_label = Label(master = window, text = '100%', relief = "flat", anchor = "center", bg = "#262626")
 
 player = Player(songs_list, start_time, end_time, music_slider, volume_label, volume_slider, volume_but)
 
@@ -74,15 +87,18 @@ window.config(menu = main_menu)
 #Добавляем в меню возможность добавить музыкальные файлы
 menu = Menu(main_menu)
 main_menu.add_cascade(label = "File", menu = menu)
+menu.add_command(label = "About", command = about)
+menu.add_separator()
+menu.add_command(label = "Reload", command = window.update)
+menu.add_separator()
 menu.add_command(label = "Add Song To Playlist", command = player.add_file_to_playlist)
 menu.add_separator()
 menu.add_command(label = "Clear Playlist", command = player.clear_playlist)
 menu.add_separator()
-# menu.add_command(label = "Quit", command = player.quit)
+menu.add_command(label = "Quit", command = window.destroy)
 
 
 if __name__ == "__main__":
     volume_but.config(command = player.mute)
     volume_slider.config(command = player.volume_slide)
-    # window.protocol("WM_DELETE_WINDOW", on_closing)
     window.mainloop()
