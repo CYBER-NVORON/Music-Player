@@ -20,7 +20,7 @@ Music player developed using Pygame, Tkinter, Mutagen and Platform.
 
 # Requirements
 ```
-tkinter
+tk
 pygame
 mutagen
 platform
