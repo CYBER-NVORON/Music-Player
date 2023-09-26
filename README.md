@@ -23,7 +23,6 @@ Music player developed using Pygame, Tkinter, Mutagen and Platform.
 tk
 pygame
 mutagen
-platform
 ```
 
 For installing requirements: ```pip install -r requirements.txt```
