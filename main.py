@@ -15,14 +15,14 @@ def about():
     version.pack()
     created.pack()
 
-
-#Окно
 window = Tk()
 window.title("Music Player")
+
 if platform.system() == 'Windows':
     window.geometry("300x450")
 else:
     window.geometry("300x400")
+
 window.config(bg = "#262626")
 window.resizable(False, False)
 window.iconphoto(True, PhotoImage(file = './gui/logo.png'))
@@ -41,7 +41,6 @@ volume_label = Label(master = window, text = '100%', fg = "white", relief = "fla
 
 player = Player(songs_list, start_time, end_time, music_slider, volume_label, volume_slider, volume_but)
 
-#Картинки кнопок
 previous_img = PhotoImage(file = "./gui/previous.png")
 play_img = PhotoImage(file = "./gui/play.png")
 pause_img = PhotoImage(file = "./gui/pause.png")
@@ -49,7 +48,6 @@ next_img = PhotoImage(file = "./gui/next.png")
 add_img = PhotoImage(file = "./gui/add.png")
 remove_img = PhotoImage(file = "./gui/remove.png")
 
-#Кнопки
 btn_frame = Frame(window, bg = "#262626")
 previous_btn = Button(master = btn_frame, image = previous_img, borderwidth = 0, relief = "flat", bg = "#262626", command = player.previous_song)
 play_btn = Button(master = btn_frame, image = play_img, borderwidth = 0, relief = "flat", bg = "#262626", command = player.play_song)
@@ -83,11 +81,10 @@ volume_but.pack(padx = (12, 10), side = "left")
 volume_slider.pack(padx = (10, 22), side = "right")
 volume_label.pack()
 
-#Меню
+
 main_menu = Menu(window)
 window.config(menu = main_menu)
 
-#Добавляем в меню возможность добавить музыкальные файлы
 menu = Menu(main_menu)
 main_menu.add_cascade(label = "File", menu = menu)
 menu.add_command(label = "About", command = about)
