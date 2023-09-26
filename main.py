@@ -1,6 +1,7 @@
 from tkinter import Tk, Listbox, PhotoImage, Button, Frame, Menu, Label, Scale, Toplevel
 from player import Player
 import platform
+import os
 
 def about():
     about_win = Toplevel(window)
@@ -25,7 +26,7 @@ else:
 
 window.config(bg = "#262626")
 window.resizable(False, False)
-window.iconphoto(True, PhotoImage(file = './gui/logo.png'))
+window.iconphoto(True, PhotoImage(file = os.getcwd() + '/gui/logo.png'))
 songs_list = Listbox(master = window, fg = "white", bg = "black", borderwidth = 5, justify = "left", width = 29, font = ('poppins', 14))
 
 
@@ -41,12 +42,12 @@ volume_label = Label(master = window, text = '100%', fg = "white", relief = "fla
 
 player = Player(songs_list, start_time, end_time, music_slider, volume_label, volume_slider, volume_but)
 
-previous_img = PhotoImage(file = "./gui/previous.png")
-play_img = PhotoImage(file = "./gui/play.png")
-pause_img = PhotoImage(file = "./gui/pause.png")
-next_img = PhotoImage(file = "./gui/next.png")
-add_img = PhotoImage(file = "./gui/add.png")
-remove_img = PhotoImage(file = "./gui/remove.png")
+previous_img = PhotoImage(file = os.getcwd() + "/gui/previous.png")
+play_img = PhotoImage(file = os.getcwd() + "/gui/play.png")
+pause_img = PhotoImage(file = os.getcwd() + "/gui/pause.png")
+next_img = PhotoImage(file = os.getcwd() + "/gui/next.png")
+add_img = PhotoImage(file = os.getcwd() + "/gui/add.png")
+remove_img = PhotoImage(file = os.getcwd() + "/gui/remove.png")
 
 btn_frame = Frame(window, bg = "#262626")
 previous_btn = Button(master = btn_frame, image = previous_img, borderwidth = 0, relief = "flat", bg = "#262626", command = player.previous_song)
