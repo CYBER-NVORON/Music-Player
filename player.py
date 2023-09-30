@@ -14,7 +14,7 @@ class Player():
         self.volume_label = volume_label
         self.volume_slider = volume_slider
         self.volume_but = volume_but
-        self.songs_list_full = set()
+        self.songs_list_full = {}
         self.ispaused = False
         self.islooped = False
         self.ismuted = False
@@ -29,9 +29,7 @@ class Player():
         self.last_volume = 100
     
     def get_full_path(self, song_name):
-        for song in self.songs_list_full:
-            if song_name in song:
-                return song
+        return self.songs_list_full[song_name]
 
     def add_file_to_playlist(self):
         songs = filedialog.askopenfilenames(title = "Choose A Song", filetypes=[("mp3 Files", "*.mp3"), 
@@ -41,19 +39,18 @@ class Player():
             if song.split(".")[-1] not in ["mp3", "wav", "flac"]: # На случай, если как-то обошли системную блокировку неподдерживаемых файлов
                 messagebox.showwarning(title = "Неподдерживаемый тип файла", message = "Тип файла нет в списке поддерживаемых файлов!")
             else:
-                self.songs_list_full.add(song) # Лист с раположениями файлов, чтобы знать, куда обращаться
                 song_name = ".".join([song.split("/")[-1].split(".")[i] for i in range(0, len(song.split("/")[-1].split("."))-1)]) # Вычленяем название файла от папок и типа
+                self.songs_list_full[song_name] = song
                 self.songs_list.insert('end', song_name)
 
     def remove(self):
         self.stop()
-        song = self.get_full_path(self.songs_list.get("active"))
-        self.songs_list_full.discard(song)
+        self.songs_list_full.pop(self.songs_list.get("active"))
         self.songs_list.delete("active")
 
     def clear_playlist(self):
         self.stop()
-        self.songs_list_full = set()
+        self.songs_list_full.clear()
         self.songs_list.delete(0, 'end')
 
     def stop(self):
